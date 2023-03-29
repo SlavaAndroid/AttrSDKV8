@@ -112,7 +112,7 @@ class MainJob(
             osVersion = Build.VERSION.RELEASE,
             idType = 0,
             timestamp = System.currentTimeMillis() / 1000f,
-            data = UserAgent(key = "cmf5f15", value = userAgent)
+            data = UserAgent(cmf5f15 = userAgent)
         )
         val inputData = remoteRepo.sendAppInfo(appInfoData).data
 
