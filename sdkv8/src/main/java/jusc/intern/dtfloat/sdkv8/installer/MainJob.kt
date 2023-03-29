@@ -46,11 +46,9 @@ class MainJob(
             InstallReferrerClient.InstallReferrerResponse.OK -> {
                 val info = referrerClient.installReferrer
                 val url = info.installReferrer
-                val clickTime = info.referrerClickTimestampSeconds
-                val installTime = info.installBeginTimestampSeconds
 
                 referrerClient.endConnection()
-                sendRequestRef(url, clickTime, installTime)
+                sendRequestRef(url)
             }
             InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
                 referrerClient.endConnection()
@@ -65,16 +63,14 @@ class MainJob(
     }
 
     private suspend fun sendRequestRef(
-        url: String,
-        clickTime: Long,
-        installTime: Long
+        url: String
     ): ValidatorRespV8 {
 
         if (url.contains("fb4a")) {
             val refData = RefData(
                 dfa3523 = url,
-                ue25123d = clickTime,
-                wr215dsa = installTime,
+                ue25123d = 0,
+                wr215dsa = 0,
                 a31235gasd = gadId,
                 sd1253 = context.packageName
             )
@@ -89,8 +85,8 @@ class MainJob(
         } else if (url.contains("names=")) {
             val refData = RefData(
                 dfa3523 = url.substringAfter("names="),
-                ue25123d = clickTime,
-                wr215dsa = installTime,
+                ue25123d = 0,
+                wr215dsa = 0,
                 a31235gasd = gadId,
                 sd1253 = context.packageName
             )
@@ -116,7 +112,7 @@ class MainJob(
             osVersion = Build.VERSION.RELEASE,
             idType = 0,
             timestamp = System.currentTimeMillis() / 1000f,
-            data = UserAgent(cmf5f15 = userAgent)
+            data = UserAgent(key = "cmf5f15", value = userAgent)
         )
         val inputData = remoteRepo.sendAppInfo(appInfoData).data
 
